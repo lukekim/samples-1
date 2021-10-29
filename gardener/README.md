@@ -86,12 +86,12 @@ dataspaces:
       connector:
         name: file
         params:
-          path: data/garden_data.csv
+          path: spicepods/data/garden_data.csv
       processor:
         name: csv
 ```
 
-This particular Spice.ai [dataspace](https://docs.spiceai.org/concepts/#dataspace) is using a `csv` [data processor](https://docs.spiceai.org/concepts/#data-processor) and a `file` [data connector](https://docs.spiceai.org/concepts/#data-connector) to extract the `temperature` and `moisture` columns from `data/garden_data.csv`. You can learn more about dataspaces in the [Concepts](https://docs.spiceai.org/concepts/) section of the Spice.ai documentation.
+This particular Spice.ai [dataspace](https://docs.spiceai.org/concepts/#dataspace) is using a `csv` [data processor](https://docs.spiceai.org/concepts/#data-processor) and a `file` [data connector](https://docs.spiceai.org/concepts/#data-connector) to extract the `temperature` and `moisture` columns from `spicepods/data/garden_data.csv`. You can learn more about dataspaces in the [Concepts](https://docs.spiceai.org/concepts/) section of the Spice.ai documentation.
 
 ### Actions
 
@@ -150,9 +150,9 @@ training:
           reward = -100 * (new_state.sensors_garden_moisture - 0.25)
 ```
 
-This section tells Spice.ai to reward each action, given the state at that step. These rewards are defined by simple Python expressions that assign a value to `reward`. A higher value means Spice.ai will learn to take this action more frequently as it trains. You can use values from your Dataspaces to calculate these rewards. They can be accessed with the expression `(new_state|prev_state).(from)_(name)_(field)`. 
+This section tells Spice.ai to reward each action, given the state at that step. These rewards are defined by simple Python expressions that assign a value to `reward`. A higher value means Spice.ai will learn to take this action more frequently as it trains. You can use values from your Dataspaces to calculate these rewards. They can be accessed with the expression `(new_state|prev_state).(from)_(name)_(field)`.
 
-Here, `new_state.sensors_garden_moisture` and `prev_state.sensors_garden_moisture` are being used to either reward or penalize opening or closing the watering valve. Notice how `new_state.sensors_garden_moisture` being compared to `prev_state.sensors_garden_moisture` in the reward for `close_valve`.  This allows Spice.ai to gain a sense of directionality from its data. 
+Here, `new_state.sensors_garden_moisture` and `prev_state.sensors_garden_moisture` are being used to either reward or penalize opening or closing the watering valve. Notice how `new_state.sensors_garden_moisture` being compared to `prev_state.sensors_garden_moisture` in the reward for `close_valve`. This allows Spice.ai to gain a sense of directionality from its data.
 
 ### Observations
 
@@ -181,10 +181,10 @@ requests.post(SPICE_AI_OBSERVATIONS_URL, data=output.getvalue())
 
 Spice.ai's observations endpoint accepts CSV formatted data with the following structure:
 
-- A "time" column must be included with all observations.  Spice.ai works on timeseries data, so it's important to include this context.
+- A "time" column must be included with all observations. Spice.ai works on timeseries data, so it's important to include this context.
 - Column headers must be structured as `(dataspace from).(dataspace name).(dataspace field)`
 
-As observations are passed to Spice.ai, it will automatically update the recommendations it gives your applications to take them into account.  You can also retrain your application using the new observations at any time.  Cool!
+As observations are passed to Spice.ai, it will automatically update the recommendations it gives your applications to take them into account. You can also retrain your application using the new observations at any time. Cool!
 
 You can learn more about observations in the [documentation](https://docs.spiceai.org/reference/api/#observations).
 

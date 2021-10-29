@@ -6,7 +6,7 @@ import requests
 
 from garden import Garden
 
-GARDEN_DATA_CSV_PATH = "data/garden_data.csv"
+GARDEN_DATA_CSV_PATH = "spicepods/data/garden_data.csv"
 
 SPICE_AI_OBSERVATIONS_URL = "http://localhost:8000/api/v0.1/pods/gardener/observations"
 SPICE_AI_RECOMMENDATION_URL = (
